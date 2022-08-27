@@ -1,0 +1,35 @@
+.footer-logo-wrapper{
+    max-width: 151px;
+    height: 151px;
+}
+
+.contact-info-wrapper{
+    @include desktop{
+        border-left: 1px solid $primary;
+    }
+}
+
+.contact-info{
+    @include desktop{
+        width: 66.67%;
+        margin: 0 auto;
+    }
+}
+
+.contact-info-item{
+    text-align: center;
+    @include desktop{
+        text-align: left;
+    }
+}
+
+.social-logo-wrapper{
+    @include desktop{
+        padding-left: 54.5px;
+        padding-right: 54.5px;
+    }
+}
+
+.social-logo{
+    max-width: 80px;
+}

@@ -1,0 +1,38 @@
+header{
+    position: relative;
+}
+
+.header-wrapper{
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+.share-logo{
+    width: 60px;
+    height: 60px;
+}
+
+
+.nav-link{
+    color: $base;
+    border-radius: 5px;
+    &:hover{
+        color: $white;
+        background-color: $base;
+    }
+}
+
+.mdi.mdi-menu{
+    font-size: 44px;
+    line-height: 1;
+}
+
+.nav-sm{
+    position: absolute;
+    top: 88px;
+    width: 100%;
+}
+
+.nav-link-sm{
+    display: block;
+}

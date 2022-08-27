@@ -1,0 +1,235 @@
+.banner{
+    background-image: url('/src/assets/images/bg-banner-sm.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    @include desktop{
+        height: 600px;
+        background-image: url('/src/assets/images/bg-banner.png');
+    }
+}
+
+.banner-slogan{
+    font-family: 'Century Gothic', sans-serif;
+    text-align: center;
+    @include desktop{
+        text-align: right;
+    }
+}
+h2.banner-slogan{
+    @include desktop{
+        line-height: 72px;
+    }
+}
+
+.search-form{
+    border-radius: 10px;
+    box-shadow: 4px 8px 10px rgba(0,0,0,.25);
+    .search-form-item{
+        position: relative;
+    }
+    .form-control{
+        background-color: #F2F2F2;
+        opacity: 0.4;
+        padding: 8px;
+        font-size: 12px;
+        line-height: 16px;
+    }
+    @include desktop{
+        width: 66.66%; 
+        margin: 0 auto;
+    }
+}
+
+.search-icon{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: 6px;
+    right:14px;
+}
+
+.common-bother{
+    ul{
+        padding-left: 96px;
+        padding-right: 96px;
+    }
+}
+
+.bother-pic{
+    max-width: 151px;
+    @include desktop{
+        max-width: 267px;
+    }
+}
+
+.bother-text{
+    @include desktop{
+        max-width: 170px;
+        margin: 0 auto;
+    }
+}
+
+.slogan{
+    height: 236px;
+    background-image: url('/src/assets/images/bg-slogan-sm.png');
+    @include desktop{
+        height: 432px;
+        background-image: url('/src/assets/images/bg-slogan.png');
+    }
+}
+
+.restaurant-list-tab-wrapper{
+    max-width: 947px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.restaurant-list-tab{
+    width: 84px;
+    padding: 10px;
+    margin: 0 auto;
+    display: block;
+    position: relative;
+    &:hover{
+        &::after{
+            content:'';
+            position: absolute;
+            display: block;
+            border-bottom: 4px solid $secondary;
+            max-width: 267px;
+            width: 100%;
+            bottom: 0px;
+            left: 0;
+        }
+    }
+    @include desktop{
+        padding: 0;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        width: 267px;
+        margin: 0 auto;
+    }
+}
+
+.restaurant-list-tab.active{
+    position: relative;
+    &::after{
+        content:'';
+        position: absolute;
+        display: block;
+        border-bottom: 4px solid $secondary;
+        max-width: 267px;
+        width: 100%;
+        bottom: 0px;
+        left: 0;
+    }
+}
+
+.swiper-wrapper{
+    position: relative;
+}
+
+.swiper-slide{
+    @include desktop{
+        &:nth-child(3n+1){
+            .restaurants-card{
+                margin-left: auto;
+                margin-right: 25px;
+            }
+        }
+        &:nth-child(3n){
+            .restaurants-card{
+                margin-left: 25px;
+                margin-right: auto;
+            }
+        }
+
+    }
+}
+
+.restaurants-card{
+    margin: 0 auto;
+    max-width: 267px;
+    display: block;
+    color: $base;
+    text-decoration: none;
+    border-radius: 10px;
+    box-shadow:  4px 8px 10px rgba(0,0,0,.25);
+}
+
+.restaurant-pic{
+    img{
+        border-radius: 10px 10px 0 0;
+    }
+}
+
+.restaurant-info{
+    border-radius: 0px 0px 10px 10px;
+}
+
+.restaurant-feature{
+    background-color: #F2F2F2;
+    border-radius: 5px;
+}
+
+.mdi.mdi-chevron-left,.mdi.mdi-chevron-right{
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    font-size: 28px;
+    line-height: 28px;
+    cursor: pointer;
+    @include desktop {
+        font-size: 40px;
+        line-height: 44px;
+    }
+    
+}
+
+.mdi.mdi-chevron-right{
+    right: 0;
+}
+
+.feature{
+    position: relative;
+}
+
+.feature-bg{
+    @include desktop{
+        position: absolute;
+        background-image: url('/src/assets/images/bg-feature.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        height: 1024px;
+        bottom: 234px;
+        z-index: -20;
+    }
+}
+
+.feature-btn{
+    color: $base;
+    border-radius: 5px;
+    &:hover{
+        color: $white;
+        background-color: $base;
+    }
+}
+
+.feature-image{
+    max-width: 151px;
+    @include desktop{
+        max-width: 480px;
+    }
+}
+
+.feature-text{
+    @include desktop{
+        max-width: 460px;
+        &:last-child{
+            margin-bottom: 160px;
+        }
+    }
+}
