@@ -1,0 +1,49 @@
+.bulletin-banner{
+    display: block;
+    height: 480px;
+    background-image: url('/src/assets/images/restaurant-8.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bulletin-type{
+    display: block;
+    color: $base;
+    &.active,&:hover{
+        color: $secondary;
+        border-bottom:4px solid $secondary;
+    }
+}
+
+.card-article-pic{
+    position: relative;
+    height:240px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.8;
+}
+
+#article-1{
+    background-image: url('/src/assets/images/article-1.jpg');
+}
+
+#article-2{
+    background-image: url('/src/assets/images/article-2.jpg');
+}
+
+#article-3{
+    background-image: url('/src/assets/images/article-3.jpg');
+}
+
+#article-4{
+    background-image: url('/src/assets/images/article-4.jpg');
+}
+
+.card-article-type-wrapper{
+    text-shadow: 3px 3px #000;
+    position: absolute;
+    top: 16px;
+    left: 16px;
+}

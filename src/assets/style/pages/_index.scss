@@ -25,20 +25,22 @@ h2.banner-slogan{
 .search-form{
     border-radius: 10px;
     box-shadow: 4px 8px 10px rgba(0,0,0,.25);
-    .search-form-item{
-        position: relative;
-    }
-    .form-control{
-        background-color: #F2F2F2;
-        opacity: 0.4;
-        padding: 8px;
-        font-size: 12px;
-        line-height: 16px;
-    }
     @include desktop{
         width: 66.66%; 
         margin: 0 auto;
     }
+}
+
+.search-form-item{
+    position: relative;
+}
+
+.form-control{
+    background-color: #F2F2F2;
+    opacity: 0.6;
+    padding: 8px;
+    font-size: 12px;
+    line-height: 16px;
 }
 
 .search-icon{
@@ -148,32 +150,7 @@ h2.banner-slogan{
     }
 }
 
-.restaurants-card{
-    margin: 0 auto;
-    max-width: 267px;
-    display: block;
-    color: $base;
-    text-decoration: none;
-    border-radius: 10px;
-    box-shadow:  4px 8px 10px rgba(0,0,0,.25);
-}
-
-.restaurant-pic{
-    img{
-        border-radius: 10px 10px 0 0;
-    }
-}
-
-.restaurant-info{
-    border-radius: 0px 0px 10px 10px;
-}
-
-.restaurant-feature{
-    background-color: #F2F2F2;
-    border-radius: 5px;
-}
-
-.mdi.mdi-chevron-left,.mdi.mdi-chevron-right{
+.restaurant-nav-left,.restaurant-nav-right{
     position: absolute;
     z-index: 10;
     top: 50%;
@@ -187,7 +164,7 @@ h2.banner-slogan{
     
 }
 
-.mdi.mdi-chevron-right{
+.restaurant-nav-right{
     right: 0;
 }
 

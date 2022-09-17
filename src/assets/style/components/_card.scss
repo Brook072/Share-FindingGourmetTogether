@@ -1,0 +1,20 @@
+.restaurants-card{
+    margin: 0 auto;
+    max-width: 267px;
+    display: block;
+    color: $base;
+    text-decoration: none;
+    border-radius: 10px;
+    box-shadow:  4px 8px 10px rgba(0,0,0,.25);
+}
+
+.restaurant-pic{
+    height:164px;
+    img{
+        border-radius: 10px 10px 0 0;
+    }
+}
+
+.restaurant-info{
+    border-radius: 0px 0px 10px 10px;
+}

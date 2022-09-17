@@ -1,0 +1,19 @@
+.login-logo{
+    display: block;
+    background-image: url('/Share-FindingGourmetTogether/src/assets/images/footer-logo.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    @include desktop{
+        width: 120px;
+        height: 120px;
+    }
+}
+
+.login-bg{
+    opacity: 0.8;
+    background-image: url('/Share-FindingGourmetTogether/src/assets/images/login-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}

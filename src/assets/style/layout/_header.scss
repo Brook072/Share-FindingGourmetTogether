@@ -8,6 +8,11 @@ header{
 }
 
 .share-logo{
+    display: block;
+    background-image: url('assets/images/logo.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     width: 60px;
     height: 60px;
 }
@@ -16,6 +21,7 @@ header{
 .nav-link{
     color: $base;
     border-radius: 5px;
+    border: 1px solid $base;
     &:hover{
         color: $white;
         background-color: $base;

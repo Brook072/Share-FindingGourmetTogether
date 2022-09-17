@@ -1,27 +1,90 @@
-<script>
-  import {ref} from 'vue'
+<script setup>
+  import {ref , computed} from 'vue'
   import { Swiper, SwiperSlide } from 'swiper/vue';
   import { Navigation } from 'swiper';
+  import { RouterLink } from 'vue-router'
+  import axios  from 'axios';
   import 'swiper/css';
   import 'swiper/css/navigation';
-  export default {
-    components: {
-      Swiper,
-      SwiperSlide,
-    },
-    setup() {
-      const commonBothers = ref([
-        {id:1, src:'/src/assets/images/bother-1.png', html:'一群人看評價搞成多人大型踩地雷現場'},
-        {id:2, src:'/src/assets/images/bother-2.png', html:'只想下班好好吃個一餐<br>但總會弄成皇帝選妃'},
-        {id:3, src:'/src/assets/images/bother-3.png', html:'記不起來上次那間很好吃的店在哪裡'},
-        {id:4, src:'/src/assets/images/bother-4.png', html:'都打到骨折了客人還是不知道這裡有間店'}
-      ])
-      return {
-        commonBothers,
-        modules: [Navigation],
-      };
-    },
-  };
+  const api = 'https://share-database.herokuapp.com'
+  const commonBothers = ref([
+    {id:1, src:'/src/assets/images/bother-1.png', html:'一群人看評價搞成多人大型踩地雷現場'},
+    {id:2, src:'/src/assets/images/bother-2.png', html:'只想下班好好吃個一餐<br>但總會弄成皇帝選妃'},
+    {id:3, src:'/src/assets/images/bother-3.png', html:'記不起來上次那間很好吃的店在哪裡'},
+    {id:4, src:'/src/assets/images/bother-4.png', html:'都打到骨折了客人還是不知道這裡有間店'}
+  ])
+  const restaurantList = ref([]);
+  const nearByU = ref(true);
+  const goodRating = ref(false);
+  const surprise = ref(false);
+  const userLocation = "C";
+  axios.get(api+'/restaurant').then((res) => {
+      restaurantList.value = res.data
+    })
+
+  function restaurantListTabSelect(x){
+    if(x == 'nearByU'){
+      goodRating.value = false;
+      surprise.value = false;
+      nearByU.value = true
+    }else if(x == 'goodRating'){
+      nearByU.value = false;
+      surprise.value = false;
+      goodRating.value = true
+    }else if( x == 'surprise'){
+      nearByU.value = false;
+      goodRating.value = false;
+      surprise.value = true
+    }else{
+      return;
+    }
+  }
+
+  function randomSelector(y){
+    let randomList = [];
+    for(let item = 0; item<6; item++){
+      let randomNum = Math.floor(Math.random()* y.length)
+      randomList.push(y[randomNum]);
+      y.splice(randomNum, 1);
+    }
+    return randomList;
+  }
+
+  const selectedRestaurantList = computed(()=>{
+    const originList = JSON.parse(JSON.stringify(restaurantList.value))
+    for(let i = 0; i<originList.length; i++){
+      originList[i].tags.sort(
+        function compareNumbers(a,b){
+          return b[1]-a[1]
+      })
+      originList[i].tags.splice(3,2)
+    }
+    if(nearByU.value){
+      let countryList = originList.filter((t) => t.country=='C')
+      if(countryList.length != 0){
+        return randomSelector(countryList)
+      }else{
+        return[];
+      }
+    }else if(goodRating.value){
+      let countryList = originList
+      if(countryList.length != 0){
+        return randomSelector(countryList)
+      }else{
+        return[];
+      }
+    }else if(surprise.value){
+      let countryList = originList
+      if(countryList.length != 0){
+        return randomSelector(countryList)
+      }else{
+        return[];
+      }
+    }else{
+        return[];
+    }
+  })
+
 </script>
 
 <template>
@@ -72,10 +135,10 @@
                   </li>
                 </ul>
               </form>
-              <a href="" class="search-btn">
-                <i class="ai-search text-white text-24 lh-1"></i>
-                <span class="text-white">搜尋</span>
-              </a>
+              <router-link to="/search" class="search-btn">
+                <i class="ai-search text-24 lh-1"></i>
+                <span>搜尋</span>
+              </router-link>
             </div>
           </div>
         </div>
@@ -95,7 +158,7 @@
       </div>
     </div>
     <div class="slogan d-flex flex-column align-items-center justify-content-center">
-      <h2 class="text-white text-center text-28 text-lg-60 fw-bold mb-3">歡迎來到紛饗！</h2>
+      <h2 class="text-white text-center text-28 text-lg-60 fw-bold mb-3">歡迎來到紛饗!</h2>
       <p class="text-white text-center text-16 text-lg-28">我的美食，我來掌握！</p>
     </div>
     <div class="restaurant-list py-7">
@@ -106,13 +169,13 @@
         </div>
         <div class="restaurant-list-tab-wrapper d-flex justify-content-between mb-5">
           <div>
-            <a href="#" class="restaurant-list-tab text-center">在你附近</a>
+            <a href="#" class="restaurant-list-tab text-center" :class="{active: nearByU}" @click.prevent="restaurantListTabSelect('nearByU')">在你附近</a>
           </div>
           <div>
-            <a href="#" class="restaurant-list-tab text-center">好評如潮</a>
+            <a href="#" class="restaurant-list-tab text-center" :class="{active: goodRating}" @click.prevent="restaurantListTabSelect('goodRating')">好評如潮</a>
           </div>
           <div>
-            <a href="#" class="restaurant-list-tab text-center">給我驚喜</a>
+            <a href="#" class="restaurant-list-tab text-center" :class="{active: surprise}" @click.prevent="restaurantListTabSelect('surprise')">給我驚喜</a>
           </div>
         </div>
         <swiper 
@@ -123,111 +186,44 @@
             prevEl: '.mdi.mdi-chevron-left'
             }"
           :breakpoints="{
+            '768':{
+              slidesPerView: 2,
+              slidesPerGroup: 2,
+            },
             '1400':{
               slidesPerView: 3,
               slidesPerGroup: 3
             }
           }"
-          :modules="modules"
+          :modules=[Navigation]
           >
-          <swiper-slide>
-            <a href="#" class="restaurants-card">
+          <swiper-slide v-for="{id, image, name, country, area, type, tags} in selectedRestaurantList" :key="id">
+            <router-link to="/store" class="restaurants-card">
               <div class="restaurant-pic">
-                <img src="/src/assets/images/restaurant-1.png" alt="" class="">
+                <img :src="image" alt="" class="w-100 h-100">
               </div>
               <div class="restaurant-info bg-primary pt-4 pb-5 px-4">
-                <h3 class="text-16 mb-1">我是店家名稱最多十六個字我是店家名</h3>
-                <p class="text-base text-center mb-4">店家地區 | 店家類型</p>
-                <div class="restaurant-feature-wrapper d-flex justify-content-between">
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
+                <h3 class="text-16 mb-1 text-center fw-bold">{{name}}</h3>
+                <p class="text-base text-center mb-4">{{country + area}} | {{type}}</p>
+                <div class="feature-tag-wrapper d-flex justify-content-between">
+                  <a href="#" class="feature-tag text-12 text-black border border-base py-1 px-4">
+                    <span class="d-block mdi mdi-camera text-center"></span>
+                    {{tags[0][0]}}
+                  </a>
+                  <a href="#" class="feature-tag text-12 text-black border border-base py-1 px-4">
+                    <span class="d-block mdi mdi-room-service text-center"></span>
+                    {{tags[1][0]}}
+                  </a>
+                  <a href="#" class="feature-tag text-12 text-black border border-base py-1 px-4">
+                    <span class="d-block mdi mdi-food text-center"></span>
+                    {{tags[2][0]}}
+                  </a>
                 </div>
               </div>
-            </a>
+            </router-link>
           </swiper-slide>
-          <swiper-slide>
-            <a href="#" class="restaurants-card">
-              <div class="restaurant-pic">
-                <img src="/src/assets/images/restaurant-1.png" alt="" class="">
-              </div>
-              <div class="restaurant-info bg-primary pt-4 pb-5 px-4">
-                <h3 class="text-16 mb-1">我是店家名稱最多十六個字我是店家名</h3>
-                <p class="text-base text-center mb-4">店家地區 | 店家類型</p>
-                <div class="restaurant-feature-wrapper d-flex justify-content-between">
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
-                </div>
-              </div>
-            </a>
-          </swiper-slide>
-          <swiper-slide>
-            <a href="#" class="restaurants-card">
-              <div class="restaurant-pic">
-                <img src="/src/assets/images/restaurant-1.png" alt="" class="">
-              </div>
-              <div class="restaurant-info bg-primary pt-4 pb-5 px-4">
-                <h3 class="text-16 mb-1">我是店家名稱最多十六個字我是店家名</h3>
-                <p class="text-base text-center mb-4">店家地區 | 店家類型</p>
-                <div class="restaurant-feature-wrapper d-flex justify-content-between">
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
-                </div>
-              </div>
-            </a>
-          </swiper-slide>
-          <swiper-slide>
-            <a href="#" class="restaurants-card">
-              <div class="restaurant-pic">
-                <img src="/src/assets/images/restaurant-1.png" alt="" class="">
-              </div>
-              <div class="restaurant-info bg-primary pt-4 pb-5 px-4">
-                <h3 class="text-16 mb-1">我是店家名稱最多十六個字我是店家名</h3>
-                <p class="text-base text-center mb-4">店家地區 | 店家類型</p>
-                <div class="restaurant-feature-wrapper d-flex justify-content-between">
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
-                </div>
-              </div>
-            </a>
-          </swiper-slide>
-          <swiper-slide>
-            <a href="#" class="restaurants-card">
-              <div class="restaurant-pic">
-                <img src="/src/assets/images/restaurant-1.png" alt="" class="">
-              </div>
-              <div class="restaurant-info bg-primary pt-4 pb-5 px-4">
-                <h3 class="text-16 mb-1">我是店家名稱最多十六個字我是店家名</h3>
-                <p class="text-base text-center mb-4">店家地區 | 店家類型</p>
-                <div class="restaurant-feature-wrapper d-flex justify-content-between">
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
-                </div>
-              </div>
-            </a>
-          </swiper-slide>
-          <swiper-slide>
-            <a href="#" class="restaurants-card">
-              <div class="restaurant-pic">
-                <img src="/src/assets/images/restaurant-1.png" alt="" class="">
-              </div>
-              <div class="restaurant-info bg-primary pt-4 pb-5 px-4">
-                <h3 class="text-16 mb-1">我是店家名稱最多十六個字我是店家名</h3>
-                <p class="text-base text-center mb-4">店家地區 | 店家類型</p>
-                <div class="restaurant-feature-wrapper d-flex justify-content-between">
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
-                  <a href="#" class="restaurant-feature text-12 text-base border border-base py-1 px-4">特點一</a>
-                </div>
-              </div>
-            </a>
-          </swiper-slide>
-          <span class="mdi mdi-chevron-left text-base"></span>
-          <span class="mdi mdi-chevron-right text-base"></span>
+          <span class="restaurant-nav-left mdi mdi-chevron-left text-base"></span>
+          <span class="restaurant-nav-right mdi mdi-chevron-right text-base"></span>
         </swiper>
       </div>
     </div>

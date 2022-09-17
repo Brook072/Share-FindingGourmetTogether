@@ -1,0 +1,38 @@
+.article-banner{
+    display: block;
+    height: 480px;
+    background-image: url('/src/assets/images/restaurant-10.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.article-image{
+    display: block;
+    background-image: url('/src/assets/images/article-3.jpg');
+    height: 300px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.article-related-card{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: block;
+    &#related{
+        background-image: url('/src/assets/images/restaurant-10.jpg');
+    }
+    &#recommend-1{
+        background-image: url('/src/assets/images/restaurant-11.jpg');
+    }
+
+    &#recommend-2{
+        background-image: url('/src/assets/images/restaurant-6.jpg');
+    }
+}
+
+.article-related-card-content-bg{
+    background-color: rgba(0,0,0,0.7);
+}

@@ -9,10 +9,18 @@
 
 @import './style/helpers/utilities';
 
+@import './style/components/tag';
 @import './style/components/btn';
+@import './style/components/card';
 
 @import './style/layout/header';
 @import './style/layout/footer';
 
 @import './style/pages/index';
+@import './style/pages/login';
+@import './style/pages/signup';
+@import './style/pages/store';
+@import './style/pages/search';
+@import './style/pages/bulletin';
+@import './style/pages/article';
 

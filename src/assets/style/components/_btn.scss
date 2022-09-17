@@ -6,8 +6,8 @@
     border-radius: 5px;
     padding-top: 12px;
     padding-bottom: 12px;
+    color:$white;
     .ai-search{
-        color: $white;
         font-size: 24px;
         line-height: 1;
         margin-right: 8px;
@@ -15,5 +15,56 @@
     span{
         font-size: 16px;
         line-height: 22px;
+    }
+    &:hover{
+        color:$black;
+        background-color: $light;
+        margin: -3px;
+        border: 3px solid $base
+    }
+}
+
+.category-btn{
+    display: block;
+    background-color: $white;
+    border:1px solid black;
+    border-radius: 8px;
+    padding: 4px;
+    p{
+        background-color: $primary;
+        color: $base;
+        text-align: center;
+        font-weight: bold;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        border-radius: 8px;
+    }
+    &:hover{
+        p{
+            background-color: $base;
+            color: $white;
+        }
+    }
+}
+
+.pagination-btn{
+    border: 1px solid $base;
+    color: $base;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    &:hover{
+        background-color: $base;
+        color: $white
+    }
+}
+
+.back-prev-btn{
+    color:$base;
+    background-color: $white;
+    &:hover{
+        color: $white;
+        background-color: $base;
     }
 }

@@ -4,12 +4,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview --port 4173"
+    "preview": "vite preview --port 4173",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",
+    "axios": "^0.27.2",
     "bootstrap": "^5.2.0",
+    "gh-pages": "^4.0.0",
     "swiper": "^8.3.2",
+    "vee-validate": "^4.6.7",
     "vue": "^3.2.37",
     "vue-router": "^4.1.5"
   },
